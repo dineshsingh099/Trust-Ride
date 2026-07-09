@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Depends
-from app.db.connection import get_db, get_redis
+from app.db.connection import get_db
 from app.middlewares.auth_middleware import get_current_driver
 from app.middlewares.rate_limit_middleware import limiter
 from app.schemas.driver_schemas import (
@@ -28,25 +28,25 @@ router = APIRouter(prefix="/api/v1/driver", tags=["Driver"])
 @router.post("/register", response_model=MessageResponse)
 @limiter.limit("5/minute")
 async def register(request: Request, payload: DriverRegisterRequest):
-    return await driver_controller.register(get_db(), get_redis(), payload)
+    return await driver_controller.register(get_db(), payload)
 
 
 @router.post("/send-otp", response_model=MessageResponse)
 @limiter.limit("5/minute")
 async def send_otp(request: Request, payload: ResendOTPRequest):
-    return await driver_controller.send_otp(get_redis(), payload)
+    return await driver_controller.send_otp(get_db(), payload)
 
 
 @router.post("/resend-otp", response_model=MessageResponse)
 @limiter.limit("3/minute")
 async def resend_otp(request: Request, payload: ResendOTPRequest):
-    return await driver_controller.resend_otp(get_redis(), payload)
+    return await driver_controller.resend_otp(get_db(), payload)
 
 
 @router.post("/verify-otp")
 @limiter.limit("10/minute")
 async def verify_otp(request: Request, payload: OTPVerifyRequest):
-    return await driver_controller.verify_otp(get_db(), get_redis(), payload)
+    return await driver_controller.verify_otp(get_db(), payload)
 
 
 @router.post("/login")

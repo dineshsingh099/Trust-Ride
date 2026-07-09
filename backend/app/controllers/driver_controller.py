@@ -1,5 +1,4 @@
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from redis.asyncio import Redis
 from bson import ObjectId
 from fastapi import HTTPException, status
 from app.schemas.driver_schemas import (
@@ -11,20 +10,20 @@ from app.schemas.auth_schemas import LoginRequest, OTPVerifyRequest, ResendOTPRe
 import app.services.driver_service as driver_service
 
 
-async def register(db: AsyncIOMotorDatabase, redis: Redis, payload: DriverRegisterRequest):
-    return await driver_service.register_driver(db, redis, payload)
+async def register(db: AsyncIOMotorDatabase, payload: DriverRegisterRequest):
+    return await driver_service.register_driver(db, payload)
 
 
-async def send_otp(redis: Redis, payload: ResendOTPRequest):
-    return await driver_service.resend_driver_otp(redis, payload.email)
+async def send_otp(db: AsyncIOMotorDatabase, payload: ResendOTPRequest):
+    return await driver_service.resend_driver_otp(db, payload.email)
 
 
-async def resend_otp(redis: Redis, payload: ResendOTPRequest):
-    return await driver_service.resend_driver_otp(redis, payload.email)
+async def resend_otp(db: AsyncIOMotorDatabase, payload: ResendOTPRequest):
+    return await driver_service.resend_driver_otp(db, payload.email)
 
 
-async def verify_otp(db: AsyncIOMotorDatabase, redis: Redis, payload: OTPVerifyRequest):
-    return await driver_service.verify_driver_otp(db, redis, payload.email, payload.otp)
+async def verify_otp(db: AsyncIOMotorDatabase, payload: OTPVerifyRequest):
+    return await driver_service.verify_driver_otp(db, payload.email, payload.otp)
 
 
 async def login(db: AsyncIOMotorDatabase, payload: LoginRequest):

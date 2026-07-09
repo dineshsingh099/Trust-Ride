@@ -1,47 +1,65 @@
-import json
-from redis.asyncio import Redis
+from datetime import datetime, timedelta, timezone
+from motor.motor_asyncio import AsyncIOMotorDatabase
 from app.core.Settings import settings
 from app.utils.otp_generator import generate_otp
 from app.utils.security import hash_password
 from app.services.email_service import send_otp_email
 
-
-def _otp_key(role: str, email: str) -> str:
-    return f"otp:{role}:{email}"
-
-
-def _temp_data_key(role: str, email: str) -> str:
-    return f"temp_registration:{role}:{email}"
+# Collection used as a self-expiring store for pending registrations + OTPs.
+# A Mongo TTL index on `created_at` (see app/db/connection.py) auto-deletes
+# documents after TEMP_REGISTRATION_TTL_SECONDS, mirroring the old Redis key TTL.
+COLLECTION = "otp_registrations"
 
 
-async def create_temp_registration(redis: Redis, role: str, email: str, data: dict) -> str:
+def _now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+async def create_temp_registration(db: AsyncIOMotorDatabase, role: str, email: str, data: dict) -> str:
     payload = dict(data)
     payload["password"] = hash_password(payload["password"])
-    await redis.set(_temp_data_key(role, email), json.dumps(payload), ex=settings.TEMP_REGISTRATION_TTL_SECONDS)
     otp = generate_otp()
-    await redis.set(_otp_key(role, email), otp, ex=settings.OTP_EXPIRE_SECONDS)
+    otp_expires_at = _now() + timedelta(seconds=settings.OTP_EXPIRE_SECONDS)
+
+    await db[COLLECTION].update_one(
+        {"role": role, "email": email},
+        {
+            "$set": {
+                "role": role,
+                "email": email,
+                "temp_data": payload,
+                "otp": otp,
+                "otp_expires_at": otp_expires_at,
+                "created_at": _now(),
+            }
+        },
+        upsert=True,
+    )
     await send_otp_email(email, otp, data.get("name", ""))
     return otp
 
 
-async def resend_otp(redis: Redis, role: str, email: str) -> bool:
-    temp_data_raw = await redis.get(_temp_data_key(role, email))
-    if not temp_data_raw:
+async def resend_otp(db: AsyncIOMotorDatabase, role: str, email: str) -> bool:
+    doc = await db[COLLECTION].find_one({"role": role, "email": email})
+    if not doc:
         return False
-    temp_data = json.loads(temp_data_raw)
     otp = generate_otp()
-    await redis.set(_otp_key(role, email), otp, ex=settings.OTP_EXPIRE_SECONDS)
-    await send_otp_email(email, otp, temp_data.get("name", ""))
+    otp_expires_at = _now() + timedelta(seconds=settings.OTP_EXPIRE_SECONDS)
+    await db[COLLECTION].update_one(
+        {"role": role, "email": email},
+        {"$set": {"otp": otp, "otp_expires_at": otp_expires_at}},
+    )
+    await send_otp_email(email, otp, doc["temp_data"].get("name", ""))
     return True
 
 
-async def verify_otp(redis: Redis, role: str, email: str, otp: str) -> dict | None:
-    stored_otp = await redis.get(_otp_key(role, email))
-    if not stored_otp or stored_otp != otp:
+async def verify_otp(db: AsyncIOMotorDatabase, role: str, email: str, otp: str) -> dict | None:
+    doc = await db[COLLECTION].find_one({"role": role, "email": email})
+    if not doc:
         return None
-    temp_data_raw = await redis.get(_temp_data_key(role, email))
-    if not temp_data_raw:
+    if doc["otp"] != otp:
         return None
-    await redis.delete(_otp_key(role, email))
-    await redis.delete(_temp_data_key(role, email))
-    return json.loads(temp_data_raw)
+    if doc["otp_expires_at"].replace(tzinfo=timezone.utc) < _now():
+        return None
+    await db[COLLECTION].delete_one({"_id": doc["_id"]})
+    return doc["temp_data"]

@@ -1,7 +1,6 @@
 from datetime import datetime, timezone
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from redis.asyncio import Redis
 from fastapi import HTTPException, status
 from app.schemas.driver_schemas import DriverRegisterRequest, DriverProfileFormRequest, DriverDocumentResubmitRequest
 from app.services.otp_service import create_temp_registration, resend_otp, verify_otp
@@ -11,26 +10,26 @@ from app.utils.jwt_handler import create_password_reset_token, decode_token
 from app.services.email_service import send_password_reset_email
 
 
-async def register_driver(db: AsyncIOMotorDatabase, redis: Redis, payload: DriverRegisterRequest):
+async def register_driver(db: AsyncIOMotorDatabase, payload: DriverRegisterRequest):
     existing = await db.drivers.find_one({"email": payload.email})
     if existing:
         raise HTTPException(status.HTTP_409_CONFLICT, "Email already registered")
     existing_phone = await db.drivers.find_one({"phone_number": payload.phone_number})
     if existing_phone:
         raise HTTPException(status.HTTP_409_CONFLICT, "Phone number already registered")
-    await create_temp_registration(redis, "driver", payload.email, payload.model_dump())
+    await create_temp_registration(db, "driver", payload.email, payload.model_dump())
     return {"message": "OTP sent to your email. Please verify to complete registration."}
 
 
-async def resend_driver_otp(redis: Redis, email: str):
-    ok = await resend_otp(redis, "driver", email)
+async def resend_driver_otp(db: AsyncIOMotorDatabase, email: str):
+    ok = await resend_otp(db, "driver", email)
     if not ok:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "No pending registration found or it has expired")
     return {"message": "OTP resent successfully"}
 
 
-async def verify_driver_otp(db: AsyncIOMotorDatabase, redis: Redis, email: str, otp: str):
-    data = await verify_otp(redis, "driver", email, otp)
+async def verify_driver_otp(db: AsyncIOMotorDatabase, email: str, otp: str):
+    data = await verify_otp(db, "driver", email, otp)
     if not data:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid or expired OTP")
     driver_doc = {

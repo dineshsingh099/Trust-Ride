@@ -8,11 +8,6 @@ class Settings(BaseSettings):
     MONGO_URI: str
     MONGO_DB_NAME: str
 
-    REDIS_HOST: str
-    REDIS_PORT: int
-    REDIS_DB: int = 0
-    REDIS_PASSWORD: str | None = None
-
     JWT_SECRET_KEY: str
     JWT_ALGORITHM: str 
     ACCESS_TOKEN_EXPIRE_MINUTES: int 

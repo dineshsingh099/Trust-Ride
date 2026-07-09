@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.db.connection import connect_to_mongo, close_mongo_connection, connect_to_redis, close_redis_connection, get_db
+from app.db.connection import connect_to_mongo, close_mongo_connection, get_db
 from app.middlewares.rate_limit_middleware import register_rate_limiter
 from app.services.admin_service import ensure_default_admin
 from app.routes.user_routes import router as user_router
@@ -12,11 +12,9 @@ from app.routes.admin_routes import router as admin_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_to_mongo()
-    await connect_to_redis()
     await ensure_default_admin(get_db())
     yield
     await close_mongo_connection()
-    await close_redis_connection()
 
 
 def create_app() -> FastAPI:

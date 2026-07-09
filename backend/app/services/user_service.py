@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from redis.asyncio import Redis
 from fastapi import HTTPException, status
 from app.schemas.user_schemas import UserRegisterRequest
 from app.services.otp_service import create_temp_registration, resend_otp, verify_otp
@@ -10,26 +9,26 @@ from app.utils.jwt_handler import create_password_reset_token, decode_token
 from app.services.email_service import send_password_reset_email
 
 
-async def register_user(db: AsyncIOMotorDatabase, redis: Redis, payload: UserRegisterRequest):
+async def register_user(db: AsyncIOMotorDatabase, payload: UserRegisterRequest):
     existing = await db.users.find_one({"email": payload.email})
     if existing:
         raise HTTPException(status.HTTP_409_CONFLICT, "Email already registered")
     existing_phone = await db.users.find_one({"phone_number": payload.phone_number})
     if existing_phone:
         raise HTTPException(status.HTTP_409_CONFLICT, "Phone number already registered")
-    await create_temp_registration(redis, "user", payload.email, payload.model_dump())
+    await create_temp_registration(db, "user", payload.email, payload.model_dump())
     return {"message": "OTP sent to your email. Please verify to complete registration."}
 
 
-async def resend_user_otp(redis: Redis, email: str):
-    ok = await resend_otp(redis, "user", email)
+async def resend_user_otp(db: AsyncIOMotorDatabase, email: str):
+    ok = await resend_otp(db, "user", email)
     if not ok:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "No pending registration found or it has expired")
     return {"message": "OTP resent successfully"}
 
 
-async def verify_user_otp(db: AsyncIOMotorDatabase, redis: Redis, email: str, otp: str):
-    data = await verify_otp(redis, "user", email, otp)
+async def verify_user_otp(db: AsyncIOMotorDatabase, email: str, otp: str):
+    data = await verify_otp(db, "user", email, otp)
     if not data:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid or expired OTP")
     user_doc = {
