@@ -1,0 +1,37 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+class Settings(BaseSettings):
+    APP_NAME: str
+    ENV: str
+    DEBUG: bool = True
+
+    MONGO_URI: str
+    MONGO_DB_NAME: str
+
+    REDIS_HOST: str
+    REDIS_PORT: int
+    REDIS_DB: int = 0
+    REDIS_PASSWORD: str | None = None
+
+    JWT_SECRET_KEY: str
+    JWT_ALGORITHM: str 
+    ACCESS_TOKEN_EXPIRE_MINUTES: int 
+    REFRESH_TOKEN_EXPIRE_DAYS: int
+
+    OTP_EXPIRE_SECONDS: int 
+    OTP_LENGTH: int 
+    TEMP_REGISTRATION_TTL_SECONDS: int 
+
+    BREVO_API_KEY: str
+    BREVO_SENDER_EMAIL: str
+    BREVO_SENDER_NAME: str 
+
+    ADMIN_DEFAULT_EMAIL: str
+    ADMIN_DEFAULT_PASSWORD: str
+
+    RATE_LIMIT_DEFAULT: str 
+
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+
+settings = Settings()
