@@ -23,7 +23,6 @@ client.interceptors.response.use(
           return client(original)
         } catch (refreshError) {
           localStorage.removeItem('role')
-          localStorage.removeItem('must_change_password')
           window.location.href = '/'
           return Promise.reject(refreshError)
         }

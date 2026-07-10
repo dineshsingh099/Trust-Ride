@@ -5,11 +5,9 @@ import Input from '../../components/common/Input'
 import Button from '../../components/common/Button'
 import Alert from '../../components/common/Alert'
 import { changeAdminPassword } from '../../api/adminApi'
-import { useAuth } from '../../context/AuthContext'
 
 export default function AdminChangePassword() {
   const navigate = useNavigate()
-  const { clearMustChangePassword } = useAuth()
   const [form, setForm] = useState({ old_password: '', new_password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,7 +20,6 @@ export default function AdminChangePassword() {
     setLoading(true)
     try {
       await changeAdminPassword(form.old_password, form.new_password)
-      clearMustChangePassword()
       navigate('/admin/dashboard')
     } catch (err) {
       setError(err.response?.data?.detail || 'Unable to change password.')
@@ -33,9 +30,9 @@ export default function AdminChangePassword() {
 
   return (
     <AuthLayout
-      eyebrow="First login"
-      title="Set a new password"
-      subtitle="You're using the default admin password. Choose a new one before continuing."
+      eyebrow="Admin settings"
+      title="Change your password"
+      subtitle="Enter your current password and choose a new one."
     >
       <Alert type="error">{error}</Alert>
       <form onSubmit={handleSubmit}>
@@ -57,7 +54,7 @@ export default function AdminChangePassword() {
           required
         />
         <Button type="submit" fullWidth loading={loading}>
-          Update password and continue
+          Update password
         </Button>
       </form>
     </AuthLayout>

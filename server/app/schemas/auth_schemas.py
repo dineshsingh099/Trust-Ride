@@ -47,9 +47,3 @@ class MessageResponse(BaseModel):
 class AuthResponse(BaseModel):
     message: str
     role: str
-
-
-class AdminAuthResponse(BaseModel):
-    message: str
-    role: str
-    must_change_password: bool

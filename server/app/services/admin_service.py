@@ -19,7 +19,6 @@ async def ensure_default_admin(db: AsyncIOMotorDatabase):
             "email": settings.ADMIN_DEFAULT_EMAIL,
             "password_hash": hash_password(settings.ADMIN_DEFAULT_PASSWORD),
             "role": "admin",
-            "must_change_password": True,
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc),
             "last_login": None,
@@ -34,11 +33,7 @@ async def login_admin(db: AsyncIOMotorDatabase, response: Response, email: str, 
     await db.admins.update_one({"_id": admin["_id"]}, {"$set": {"last_login": datetime.now(timezone.utc)}})
     tokens = await issue_tokens(db, str(admin["_id"]), "admin")
     set_auth_cookies(response, tokens["access_token"], tokens["refresh_token"])
-    return {
-        "message": "Login successful",
-        "role": "admin",
-        "must_change_password": admin.get("must_change_password", False),
-    }
+    return {"message": "Login successful", "role": "admin"}
 
 
 async def change_admin_password(db: AsyncIOMotorDatabase, admin_id: str, old_password: str, new_password: str):
@@ -47,12 +42,13 @@ async def change_admin_password(db: AsyncIOMotorDatabase, admin_id: str, old_pas
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Admin not found")
     if not verify_password(old_password, admin["password_hash"]):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Old password is incorrect")
+    if verify_password(new_password, admin["password_hash"]):
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "New password must be different from the current password")
     await db.admins.update_one(
         {"_id": ObjectId(admin_id)},
         {
             "$set": {
                 "password_hash": hash_password(new_password),
-                "must_change_password": False,
                 "updated_at": datetime.now(timezone.utc),
             }
         },

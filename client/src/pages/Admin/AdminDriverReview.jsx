@@ -5,12 +5,13 @@ import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
 import Alert from '../../components/common/Alert'
 import Loader from '../../components/common/Loader'
-import { IconGrid, IconTruck } from '../../components/common/Icons'
+import { IconGrid, IconTruck, IconLock } from '../../components/common/Icons'
 import { getPendingDrivers, reviewDriver } from '../../api/adminApi'
 
 const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: <IconGrid />, end: true },
-  { to: '/admin/drivers', label: 'Driver review', icon: <IconTruck /> }
+  { to: '/admin/drivers', label: 'Driver review', icon: <IconTruck /> },
+  { to: '/admin/change-password', label: 'Change password', icon: <IconLock /> }
 ]
 
 export default function AdminDriverReview() {

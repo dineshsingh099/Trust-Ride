@@ -22,9 +22,9 @@ export default function AdminLogin() {
     setError('')
     setLoading(true)
     try {
-      const { data } = await loginAdmin(form.email, form.password)
-      login('admin', { must_change_password: data.must_change_password })
-      navigate(data.must_change_password ? '/admin/change-password' : '/admin/dashboard')
+      await loginAdmin(form.email, form.password)
+      login('admin')
+      navigate('/admin/dashboard')
     } catch (err) {
       setError(err.response?.data?.detail || 'Invalid admin credentials.')
     } finally {

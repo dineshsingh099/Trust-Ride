@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Request, Response
 from app.db.connection import get_db
 from app.middlewares.auth_middleware import get_current_admin
 from app.utils.rate_limiter import rate_limit
-from app.schemas.auth_schemas import LoginRequest, ChangePasswordRequest, MessageResponse, AdminAuthResponse
+from app.schemas.auth_schemas import LoginRequest, ChangePasswordRequest, MessageResponse, AuthResponse
 from app.schemas.admin_schemas import AdminDocumentReviewRequest
 import app.controllers.admin_controller as admin_controller
 import app.services.session_service as session_service
@@ -10,7 +10,7 @@ import app.services.session_service as session_service
 router = APIRouter(prefix="/api/v1/admin", tags=["Admin"])
 
 
-@router.post("/login", response_model=AdminAuthResponse, dependencies=[Depends(rate_limit(10, 60))])
+@router.post("/login", response_model=AuthResponse, dependencies=[Depends(rate_limit(10, 60))])
 async def login(response: Response, payload: LoginRequest):
     return await admin_controller.login(get_db(), response, payload)
 

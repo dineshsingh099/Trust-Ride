@@ -3,12 +3,13 @@ import DashboardLayout from '../../components/layout/DashboardLayout'
 import Card from '../../components/common/Card'
 import StatCard from '../../components/common/StatCard'
 import Loader from '../../components/common/Loader'
-import { IconGrid, IconTruck, IconShield } from '../../components/common/Icons'
+import { IconGrid, IconTruck, IconShield, IconLock } from '../../components/common/Icons'
 import { getPendingDrivers } from '../../api/adminApi'
 
 const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: <IconGrid />, end: true },
-  { to: '/admin/drivers', label: 'Driver review', icon: <IconTruck /> }
+  { to: '/admin/drivers', label: 'Driver review', icon: <IconTruck /> },
+  { to: '/admin/change-password', label: 'Change password', icon: <IconLock /> }
 ]
 
 export default function AdminDashboard() {
