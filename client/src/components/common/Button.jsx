@@ -8,16 +8,18 @@ export default function Button({
   loading = false,
   type = 'button',
   onClick,
-  disabled
+  disabled,
+  className = ""
 }) {
+
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled || loading}
-      className={`btn btn-${variant} btn-${size} ${fullWidth ? 'btn-full' : ''}`}
-    >
-      {loading ? <span className="btn-spinner" /> : children}
-    </button>
-  )
+		<button
+			type={type}
+			onClick={onClick}
+			disabled={disabled || loading}
+			className={`btn btn-${variant} btn-${size} ${fullWidth ? "btn-full" : ""} ${className}`}
+		>
+			{loading ? <span className="btn-spinner" /> : children}
+		</button>
+	);
 }
