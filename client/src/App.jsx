@@ -40,7 +40,7 @@ export default function App() {
           <Route
             path="/admin/change-password"
             element={
-              <ProtectedRoute allowedRole="admin">
+              <ProtectedRoute allowedRole="admin" allowMustChangePassword>
                 <AdminChangePassword />
               </ProtectedRoute>
             }
