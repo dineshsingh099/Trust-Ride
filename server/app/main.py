@@ -5,27 +5,23 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.Settings import settings
-from app.db.connection import connect_to_mongo, close_mongo_connection, get_db
-from app.services.admin_service import ensure_default_admin
-from app.routes.user_routes import router as user_router
-from app.routes.driver_routes import router as driver_router
-from app.routes.admin_routes import router as admin_router
+from app.db.connection import connect_to_mongo, close_mongo_connection
+from app.routes.auth_routes import router as auth_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_to_mongo()
-    await ensure_default_admin(get_db())
     yield
     await close_mongo_connection()
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Role Based Authentication System", lifespan=lifespan)
+    app = FastAPI(title="Trust Ride", lifespan=lifespan)
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[settings.FRONTEND_URL],
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -38,13 +34,14 @@ def create_app() -> FastAPI:
             content={"message": "Validation error", "errors": jsonable_encoder(exc.errors())},
         )
 
-    app.include_router(user_router)
-    app.include_router(driver_router)
-    app.include_router(admin_router)
-
     @app.get("/health")
     async def health_check():
-        return {"status": "ok"}
+        return {
+            "status": "ok",
+            "database": "connected"
+        }
+
+    app.include_router(auth_router)
 
     return app
 

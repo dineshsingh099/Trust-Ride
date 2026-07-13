@@ -1,30 +1,22 @@
-from fastapi import Request, HTTPException, status
-from app.utils.jwt_handler import decode_token
-from app.utils.cookies import ACCESS_COOKIE
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from app.core.jwt import decode_token
+from app.repository.auth_repository import UserRepository
+
+bearer_scheme = HTTPBearer()
 
 
-def _decode_and_check(request: Request, expected_role: str) -> dict:
-    token = request.cookies.get(ACCESS_COOKIE)
-    if not token:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Not authenticated")
-    try:
-        payload = decode_token(token)
-    except ValueError:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid or expired token")
-    if payload.get("type") != "access":
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid token type")
-    if payload.get("role") != expected_role:
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "Insufficient permissions")
-    return payload
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)):
+    token = credentials.credentials
+    payload = decode_token(token)
 
+    if not payload or payload.get("type") != "access":
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired token")
 
-def get_current_user(request: Request) -> dict:
-    return _decode_and_check(request, "user")
+    user_id = payload.get("user_id")
+    user = await UserRepository.get_by_id(user_id)
 
+    if not user or user.get("is_deleted") or not user.get("is_active"):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found or inactive")
 
-def get_current_driver(request: Request) -> dict:
-    return _decode_and_check(request, "driver")
-
-
-def get_current_admin(request: Request) -> dict:
-    return _decode_and_check(request, "admin")
+    return user

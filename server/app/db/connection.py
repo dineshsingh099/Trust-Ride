@@ -1,36 +1,29 @@
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from app.core.Settings import settings
 
 
 class Database:
     client: AsyncIOMotorClient | None = None
-    db = None
-
+    db: AsyncIOMotorDatabase | None = None
 
 database = Database()
 
-
-async def connect_to_mongo():
-    database.client = AsyncIOMotorClient(settings.MONGO_URI)
-    database.db = database.client[settings.MONGO_DB_NAME]
-    await database.db.users.create_index("email", unique=True)
-    await database.db.users.create_index("phone_number", unique=True)
-    await database.db.drivers.create_index("email", unique=True)
-    await database.db.drivers.create_index("phone_number", unique=True)
-    await database.db.admins.create_index("email", unique=True)
-
-    await database.db.otp_registrations.create_index(
-        [("role", 1), ("email", 1)], unique=True
-    )
-    await database.db.otp_registrations.create_index(
-        "created_at", expireAfterSeconds=settings.TEMP_REGISTRATION_TTL_SECONDS
-    )
+async def connect_to_mongo() -> None:
+    if database.client is None:
+        database.client = AsyncIOMotorClient(settings.MONGO_URI)
+        database.db = database.client[settings.MONGO_DB_NAME]
+        print("✅ MongoDB Connected")
 
 
-async def close_mongo_connection():
+async def close_mongo_connection() -> None:
     if database.client:
         database.client.close()
+        database.client = None
+        database.db = None
+        print("❌ MongoDB Disconnected")
 
 
-def get_db():
+def get_db() -> AsyncIOMotorDatabase:
+    if database.db is None:
+        raise RuntimeError("Database is not connected.")
     return database.db
