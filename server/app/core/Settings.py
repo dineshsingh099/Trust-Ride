@@ -18,7 +18,10 @@ class Settings(BaseSettings):
     BREVO_API_KEY: str
     BREVO_SENDER_EMAIL: str
     BREVO_SENDER_NAME: str
-    
+    COOKIE_SECURE: bool = True
+    COOKIE_SAMESITE: str = "lax"
+    COOKIE_DOMAIN: str | None = None
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 

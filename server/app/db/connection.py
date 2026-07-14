@@ -12,6 +12,11 @@ async def connect_to_mongo() -> None:
     if database.client is None:
         database.client = AsyncIOMotorClient(settings.MONGO_URI)
         database.db = database.client[settings.MONGO_DB_NAME]
+        await database.db.refresh_tokens.create_index("refresh_token", unique=True)
+        await database.db.refresh_tokens.create_index("expires_at", expireAfterSeconds=0)
+        await database.db.token_blacklist.create_index("token", unique=True)
+        await database.db.token_blacklist.create_index("expires_at", expireAfterSeconds=0)
+        await database.db.users.create_index("email", unique=True)
         print("✅ MongoDB Connected")
 
 

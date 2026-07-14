@@ -11,3 +11,4 @@ email-validator
 python-dotenv
 bcrypt
 passlib[bcrypt]
+slowapi

@@ -1,7 +1,5 @@
 from datetime import datetime
-
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
-
 
 class UserModel(BaseModel):
     id: str | None = None
@@ -12,11 +10,10 @@ class UserModel(BaseModel):
 
     password: str
 
-    profile_image: str | None = None
+    role: str = "user"
 
     is_verified: bool = False
     is_active: bool = True
-    is_deleted: bool = False
 
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)

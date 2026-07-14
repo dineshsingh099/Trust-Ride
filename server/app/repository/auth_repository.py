@@ -55,14 +55,8 @@ class UserRepository:
     async def delete(user_id: str):
         db = get_db()
 
-        return await db.users.update_one(
-            {"_id": ObjectId(user_id)},
-            {
-                "$set": {
-                    "is_deleted": True,
-                    "updated_at": datetime.utcnow()
-                }
-            }
+        return await db.users.delete_one(
+            {"_id": ObjectId(user_id)}
         )
 
     @staticmethod
@@ -97,7 +91,7 @@ class UserRepository:
         db = get_db()
 
         users = await db.users.find(
-            {"is_deleted": False}
+            {}
         ).skip(skip).limit(limit).to_list(length=limit)
 
         return users
