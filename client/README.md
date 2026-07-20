@@ -1,43 +1,16 @@
-# Verifyd — Frontend
+# React + Vite
 
-React (Vite) frontend for the Role-Based Authentication System, wired to the FastAPI backend in `../auth-system`.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Setup
+Currently, two official plugins are available:
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-App runs at `http://localhost:5173`. API calls to `/api/...` are proxied to `http://localhost:8000` (see `vite.config.js`) — make sure the backend (`auth-system`) is running first.
+## React Compiler
 
-## Structure
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-```
-src/
-  api/            axios client + one file per role's API calls
-  context/        AuthContext (session, tokens, role, must-change-password flag)
-  routes/         ProtectedRoute guard (role + admin password-change gate)
-  components/
-    common/       Button, Input, Card, Badge, Alert, Loader, StatCard, Icons, SealLogo
-    layout/       Sidebar (collapsible), Topbar, DashboardLayout
-  pages/
-    Home/         Landing page (welcome banner, triple-click logo -> admin login)
-    Auth/         RoleSelect, Login, Signup, VerifyOtp, ForgotPassword, ResetPassword,
-                   AdminLogin, AdminChangePassword
-    User/         UserDashboard, UserProfile
-    Driver/       DriverOnboarding (first-login form), DriverDashboard, DriverDocuments
-    Admin/        AdminDashboard, AdminDriverReview
-```
+## Expanding the ESLint configuration
 
-## Flow
-
-- `/` — landing page. "Get started" / "Log in" go to `/choose-role`, which asks User or Driver.
-- Clicking the logo on the home page **3 times** opens `/admin/login` — there's no visible admin link anywhere else.
-- User/Driver: signup → OTP verification → dashboard. Driver's first login redirects to `/driver/onboarding` (vehicle + document form) before the dashboard unlocks.
-- Admin: `/admin/login` with the default credentials → forced to `/admin/change-password` on first login (enforced both by the redirect after login and by `ProtectedRoute`) → `/admin/dashboard` → `/admin/drivers` to approve/reject driver documents with a reason.
-
-## Sidebar
-
-Every dashboard (`DashboardLayout`) has a fixed sidebar with a toggle icon: collapses to icon-only on desktop, becomes an off-canvas drawer with backdrop on screens ≤900px.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
