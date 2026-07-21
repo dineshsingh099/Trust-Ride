@@ -2,8 +2,8 @@ import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 const Landing = lazy(() => import("./pages/Landing/LandingPage"));
-const LoginPage = lazy(() => import("./pages/Login/LoginPage"));
-const RegisterPage = lazy(() => import("./pages/Register/RegisterPage"));
+const LoginPage = lazy(() => import("./pages/Auth/Login/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/Auth/Register/RegisterPage"));
 const UserDashboard = lazy(() => import("./pages/Dashboard/UserDashboard"));
 
 

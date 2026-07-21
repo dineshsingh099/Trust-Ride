@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import HeroImg from "../../assets/images/hero.png";
-import AboutImg from "../../assets/images/hero.png";
+import AboutImg from "../../assets/images/about.png";
 import BikeImg from "../../assets/icons/bike-ride.png";
 import AutoImg from "../../assets/icons/auto-ride.png";
 import CarImg from "../../assets/icons/car-ride.png";
