@@ -13,12 +13,15 @@ body {
 
 .nav {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 30px 80px;
-    background: transparent;
-    position: relative;
-    z-index: 10;
+	align-items: center;
+	justify-content: space-between;
+	height: 90px;
+	padding: 30px 80px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
 }
 
 .logo-wrapper {
@@ -48,14 +51,42 @@ body {
 }
 
 .nav-links li a {
+    position: relative;
+    display: inline-block;
     color: #fff;
     font-size: 18px;
     font-weight: 400;
+    padding-bottom: 6px;
     transition: color 0.3s ease;
+}
+
+.nav-links li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #F2A93B, #FFD37A);
+    transition: width 0.3s ease;
 }
 
 .nav-links li a:hover {
     color: #F2A93B;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+.nav-links li a.active {
+    color: #F2A93B;
+    font-weight: 600;
+}
+
+.nav-links li a.active::after {
+    width: 100%;
 }
 
 .btn {
@@ -181,6 +212,15 @@ body {
         font-size: 18px;
         display: block;
         width: 100%;
+    }
+
+    .nav-links li a.active {
+        padding-left: 12px;
+        border-left: 3px solid #F2A93B;
+    }
+
+    .nav-links li a::after {
+        display: none;
     }
 
     .btn {

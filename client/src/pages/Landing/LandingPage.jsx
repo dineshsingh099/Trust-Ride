@@ -1,19 +1,12 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import HeroImg from "../../assets/images/hero.png";
-import VerifiedImg from "../../assets/icons/verified-driver.png";
-import AvailableImg from "../../assets/icons/available-247.png";
-import TrackingImg from "../../assets/icons/live-tracking.png";
+import AboutImg from "../../assets/images/hero.png";
 import BikeImg from "../../assets/icons/bike-ride.png";
 import AutoImg from "../../assets/icons/auto-ride.png";
 import CarImg from "../../assets/icons/car-ride.png";
 import PackageImg from "../../assets/icons/package-delivery.png";
-import SafetyVerifiedImg from "../../assets/icons/safety-verified-id.png";
-import SafetySosImg from "../../assets/icons/safety-sos.png";
-import SafetyTrackingImg from "../../assets/icons/safety-tracking.png";
-import SafetyTripSharingImg from "../../assets/icons/safety-trip-sharing.png";
-import SafetyInsuranceImg from "../../assets/icons/safety-insurance.png";
-import SafetySupportImg from "../../assets/icons/safety-support.png";
 import {
 	FaArrowRight,
 	FaPhoneVolume,
@@ -23,7 +16,13 @@ import {
 	FaFlagCheckered,
 	FaPhoneAlt,
 	FaEnvelope,
-	FaPaperPlane} from "react-icons/fa";
+	FaPaperPlane,
+	FaUserCheck,
+	FaSatelliteDish,
+	FaShareAlt,
+	FaShieldAlt,
+	FaHeadset,
+} from "react-icons/fa";
 import "./LandingPage.css";
 
 const steps = [
@@ -74,52 +73,34 @@ const services = [
 
 const safetyFeatures = [
 	{
-		img: SafetyVerifiedImg,
+		icon: <FaUserCheck />,
 		title: "Verified Identity",
 		desc: "Every driver clears document checks and background verification before joining the platform.",
 	},
 	{
-		img: SafetySosImg,
+		icon: <FaPhoneVolume />,
 		title: "24/7 Emergency SOS",
 		desc: "One tap connects you to our safety team and emergency services, any time of day.",
 	},
 	{
-		img: SafetyTrackingImg,
+		icon: <FaSatelliteDish />,
 		title: "Real-Time Tracking",
 		desc: "Follow your driver on the map from pickup to drop off with live route and ETA updates.",
 	},
 	{
-		img: SafetyTripSharingImg,
+		icon: <FaShareAlt />,
 		title: "Live Trip Sharing",
 		desc: "Share your live location and trip status with family or friends in real time.",
 	},
 	{
-		img: SafetyInsuranceImg,
+		icon: <FaShieldAlt />,
 		title: "Ride Insurance",
 		desc: "Every trip on Trust Ride is covered, so you can travel with complete peace of mind.",
 	},
 	{
-		img: SafetySupportImg,
+		icon: <FaHeadset />,
 		title: "24/7 Customer Support",
 		desc: "Our support team is always here to assist you, anytime you need help during your journey.",
-	},
-];
-
-const aboutFeatures = [
-	{
-		img: VerifiedImg,
-		title: "Verified Drivers",
-		desc: "Every driver on Trust Ride goes through background checks and document verification before they hit the road.",
-	},
-	{
-		img: AvailableImg,
-		title: "Available 24/7",
-		desc: "Early morning flight or a late night trip home, a ride is always a few taps away, any hour of the day.",
-	},
-	{
-		img: TrackingImg,
-		title: "Live Tracking",
-		desc: "Share your trip with family and follow your ride on the map from pickup to drop off in real time.",
 	},
 ];
 
@@ -128,6 +109,7 @@ export default function Landing() {
 		<>
 			<div className="hero" id="hero">
 				<img src={HeroImg} alt="" className="hero-bg" />
+				<div className="hero-top-fade"></div>
 				<Navbar />
 
 				<div className="hero-content">
@@ -144,26 +126,34 @@ export default function Landing() {
 						<button className="cta-secondary">How it Works</button>
 					</div>
 
-					<div className="hero-stats">
-						<div className="stat">
-							<strong>500K+</strong>
-							<span>Rides Completed</span>
+					<div className="hero-badges">
+						<div className="hero-badge">
+							<span className="hero-badge-icon">
+								<FaShieldAlt />
+							</span>
+							<span>Verified Drivers</span>
 						</div>
-						<div className="divider"></div>
-						<div className="stat">
-							<strong>4.9</strong>
-							<span>Average Rating</span>
+						<div className="hero-badge">
+							<span className="hero-badge-icon">
+								<FaHeadset />
+							</span>
+							<span>24/7 Support</span>
 						</div>
-						<div className="divider"></div>
-						<div className="stat">
-							<strong>50+</strong>
-							<span>Cities Covered</span>
+						<div className="hero-badge">
+							<span className="hero-badge-icon">
+								<FaRoute />
+							</span>
+							<span>Live Tracking</span>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<section className="about" id="about">
+				<div className="about-media">
+					<img src={AboutImg} alt="Trust Ride" />
+				</div>
+
 				<div className="about-text">
 					<span className="about-eyebrow">About Trust Ride</span>
 					<h2>
@@ -180,18 +170,6 @@ export default function Landing() {
 						completely in your control, no matter which vehicle you choose or
 						what time of day you are travelling.
 					</p>
-				</div>
-
-				<div className="about-features">
-					{aboutFeatures.map((feature, index) => (
-						<div className="feature-card" key={index}>
-							<div className="feature-img">
-								<img src={feature.img} alt={feature.title} />
-							</div>
-							<h3>{feature.title}</h3>
-							<p>{feature.desc}</p>
-						</div>
-					))}
 				</div>
 			</section>
 
@@ -220,7 +198,7 @@ export default function Landing() {
 			</section>
 
 			<section className="safety" id="safety">
-				<div className="safety-content">
+				<div className="safety-heading-wrap">
 					<span className="about-eyebrow">Your Safety First</span>
 					<h2 className="safety-heading">
 						Every ride, <span>built on trust</span>
@@ -228,11 +206,14 @@ export default function Landing() {
 					<p className="safety-desc">
 						Safety is not an afterthought at Trust Ride, it is built into every
 						step of the journey. From the moment a driver is verified to the
-						moment you reach your destination, we keep watch so you do not have
-						to.
+						moment you reach your destination, we keep watch so you do not
+						have to.
 					</p>
+				</div>
 
+				<div className="safety-body-wrap">
 					<div className="sos-card">
+						<span className="sos-glow"></span>
 						<div className="sos-icon">
 							<FaPhoneVolume />
 						</div>
@@ -241,20 +222,18 @@ export default function Landing() {
 							<p>Instant access to help, right from the ride screen.</p>
 						</div>
 					</div>
-				</div>
 
-				<div className="safety-grid">
-					{safetyFeatures.map((item, index) => (
-						<div className="safety-card" key={index}>
-							<div className="safety-img">
-								<img src={item.img} alt={item.title} />
+					<div className="safety-grid">
+						{safetyFeatures.map((item, index) => (
+							<div className="safety-card" key={index}>
+								<div className="safety-icon">{item.icon}</div>
+								<div className="safety-body">
+									<h3>{item.title}</h3>
+									<p>{item.desc}</p>
+								</div>
 							</div>
-							<div className="safety-body">
-								<h3>{item.title}</h3>
-								<p>{item.desc}</p>
-							</div>
-						</div>
-					))}
+						))}
+					</div>
 				</div>
 			</section>
 
@@ -279,6 +258,8 @@ export default function Landing() {
 			</section>
 
 			<section className="contact" id="contact">
+				<span className="contact-glow"></span>
+
 				<div className="contact-info">
 					<span className="section-tag">GET IN TOUCH</span>
 
@@ -325,9 +306,22 @@ export default function Landing() {
 							</div>
 						</div>
 					</div>
+
+					<div className="contact-availability">
+						<span className="availability-dot"></span>
+						<div>
+							<h4>Currently Online</h4>
+							<p>Our support team is active and ready to help right now.</p>
+						</div>
+					</div>
 				</div>
 
 				<form className="contact-form">
+					<div className="contact-form-header">
+						<h3>Send us a message</h3>
+						<p>Fill in the details below, our team replies within 2 hours.</p>
+					</div>
+
 					<div className="form-row">
 						<div className="form-group">
 							<label>Full Name</label>
@@ -359,6 +353,8 @@ export default function Landing() {
 					</button>
 				</form>
 			</section>
+
+			<Footer />
 		</>
 	);
 }

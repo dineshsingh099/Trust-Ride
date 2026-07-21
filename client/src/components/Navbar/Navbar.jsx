@@ -1,11 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../../assets/images/logo.png";
 import "./Navbar.css";
 
+const navItems = [
+	{ id: "hero", label: "Home" },
+	{ id: "about", label: "About" },
+	{ id: "services", label: "Services" },
+	{ id: "safety", label: "Safety" },
+	{ id: "how-it-works", label: "How it works" },
+	{ id: "contact", label: "Contact" },
+];
+
 function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [bgOpacity, setBgOpacity] = useState(0);
+	const [activeSection, setActiveSection] = useState("hero");
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const fadeDistance = 300;
+			const progress = Math.min(window.scrollY / fadeDistance, 1);
+			setBgOpacity(progress);
+
+			const scrollPos = window.scrollY + 160;
+			let current = navItems[0].id;
+
+			for (const item of navItems) {
+				const el = document.getElementById(item.id);
+				if (el && el.offsetTop <= scrollPos) {
+					current = item.id;
+				}
+			}
+
+			setActiveSection(current);
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		handleScroll();
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -16,7 +51,12 @@ function Navbar() {
 	};
 
 	return (
-		<div className="nav">
+		<div
+			className="nav"
+			style={{
+				backgroundColor: `rgba(10, 15, 29, ${bgOpacity * 1})`,
+			}}
+		>
 			<Link to="/" className="logo-wrapper" onClick={closeMenu}>
 				<img src={Logo} alt="Logo" className="logo-img" />
 				<h1 className="logo">Trust Ride</h1>
@@ -27,36 +67,17 @@ function Navbar() {
 			</div>
 
 			<ul className={isOpen ? "nav-links active" : "nav-links"}>
-				<li>
-					<a href="#hero" onClick={closeMenu}>
-						Home
-					</a>
-				</li>
-				<li>
-					<a href="#about" onClick={closeMenu}>
-						About
-					</a>
-				</li>
-				<li>
-					<a href="#services" onClick={closeMenu}>
-						Services
-					</a>
-				</li>
-				<li>
-					<a href="#safety" onClick={closeMenu}>
-						Safety
-					</a>
-				</li>
-				<li>
-					<a href="#how-it-works" onClick={closeMenu}>
-						How it works
-					</a>
-				</li>
-				<li>
-					<a href="#contact" onClick={closeMenu}>
-						Contact
-					</a>
-				</li>
+				{navItems.map((item) => (
+					<li key={item.id}>
+						<a
+							href={`#${item.id}`}
+							className={activeSection === item.id ? "active" : ""}
+							onClick={closeMenu}
+						>
+							{item.label}
+						</a>
+					</li>
+				))}
 
 				<li className="mobile-btn">
 					<Link to="/" className="login-btn" onClick={closeMenu}>

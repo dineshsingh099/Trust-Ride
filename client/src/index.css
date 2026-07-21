@@ -1,0 +1,72 @@
+html{
+    scrollbar-width: thin;
+    scrollbar-color: #F2A93B #0A0F1D;
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar{
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-track{
+    background: linear-gradient(
+        180deg,
+        #050811 0%,
+        #0A0F1D 35%,
+        #101729 70%,
+        #050811 100%
+    );
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,.04);
+}
+
+::-webkit-scrollbar-thumb{
+    border-radius: 100px;
+    border: 3px solid #0A0F1D;
+    background: linear-gradient(
+        180deg,
+        #FFE7A6 0%,
+        #FFD37A 18%,
+        #F2A93B 45%,
+        #E89B22 72%,
+        #C97808 100%
+    );
+    box-shadow:
+        inset 0 2px 3px rgba(255,255,255,.45),
+        inset 0 -2px 4px rgba(0,0,0,.25),
+        0 0 8px rgba(242,169,59,.45),
+        0 0 18px rgba(242,169,59,.28),
+        0 0 30px rgba(242,169,59,.15);
+    transition: all .35s ease;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background: linear-gradient(
+        180deg,
+        #FFF2C9 0%,
+        #FFE08E 20%,
+        #FFC95A 45%,
+        #F2A93B 72%,
+        #D98A1F 100%
+    );
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,.6),
+        inset 0 -2px 5px rgba(0,0,0,.18),
+        0 0 12px rgba(242,169,59,.65),
+        0 0 28px rgba(242,169,59,.45),
+        0 0 42px rgba(242,169,59,.25);
+}
+
+::-webkit-scrollbar-thumb:active{
+    background: linear-gradient(
+        180deg,
+        #FFD37A 0%,
+        #F2A93B 50%,
+        #C97808 100%
+    );
+}
+
+::-webkit-scrollbar-corner{
+    background:#0A0F1D;
+}
