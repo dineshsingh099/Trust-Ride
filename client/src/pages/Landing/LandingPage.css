@@ -8,6 +8,18 @@ section {
 	min-height: 100vh;
 }
 
+@media (max-width: 1024px) {
+	section {
+		min-height: 90vh;
+	}
+}
+
+@media (max-width: 768px) {
+	section {
+		min-height: auto;
+	}
+}
+
 .hero {
 	position: relative;
 	width: 100%;
@@ -71,16 +83,6 @@ section {
 	);
 	z-index: 2;
 	pointer-events: none;
-}
-
-@media (max-width: 768px) {
-	.hero {
-		min-height: 90vh;
-	}
-
-	.hero-bg {
-		object-position: 65% center;
-	}
 }
 
 .hero-content {
@@ -211,6 +213,10 @@ section {
 }
 
 @media (max-width: 1024px) {
+	.hero {
+		min-height: 95vh;
+	}
+
 	.hero-content {
 		padding: 60px 40px;
 		max-width: 540px;
@@ -226,6 +232,14 @@ section {
 }
 
 @media (max-width: 768px) {
+	.hero {
+		min-height: 90vh;
+	}
+
+	.hero-bg {
+		object-position: 65% center;
+	}
+
 	.hero-content {
 		padding: 50px 30px;
 		max-width: 100%;
@@ -252,6 +266,11 @@ section {
 }
 
 @media (max-width: 480px) {
+	.hero {
+		min-height: auto;
+		padding-bottom: 40px;
+	}
+
 	.hero-content {
 		padding: 40px 20px;
 	}
@@ -292,6 +311,7 @@ section {
 
 .about {
 	background-color: #0A0F1D;
+	min-height: 100vh;
 	padding: 120px 80px;
 	display: flex;
 	align-items: center;
@@ -374,6 +394,7 @@ section {
 
 @media (max-width: 1024px) {
 	.about {
+		min-height: 90vh;
 		padding: 90px 40px;
 		gap: 50px;
 	}
@@ -411,6 +432,7 @@ section {
 
 @media (max-width: 768px) {
 	.about {
+		min-height: auto;
 		padding: 70px 30px;
 		gap: 40px;
 	}
@@ -444,6 +466,7 @@ section {
 
 .services {
 	background-color: #0D1326;
+	min-height: 100vh;
 	padding: 100px 80px 90px;
 	display: flex;
 	flex-direction: column;
@@ -566,6 +589,7 @@ section {
 
 @media (max-width: 1024px) {
 	.services {
+		min-height: 90vh;
 		padding: 80px 40px 70px;
 	}
 
@@ -580,6 +604,7 @@ section {
 
 @media (max-width: 768px) {
 	.services {
+		min-height: auto;
 		padding: 70px 30px 60px;
 	}
 
@@ -604,11 +629,9 @@ section {
 	}
 }
 
-/* ============ SAFETY SECTION (redesigned) ============ */
-
 .safety {
 	background-color: #0A0F1D;
-	min-height: auto;
+	min-height: 100vh;
 	padding: 110px 80px 120px;
 	display: flex;
 	flex-direction: column;
@@ -813,6 +836,7 @@ section {
 
 @media (max-width: 1024px) {
 	.safety {
+		min-height: 90vh;
 		padding: 90px 40px;
 		gap: 46px;
 	}
@@ -828,6 +852,7 @@ section {
 
 @media (max-width: 768px) {
 	.safety {
+		min-height: auto;
 		padding: 70px 30px;
 	}
 
@@ -858,10 +883,9 @@ section {
 	}
 }
 
-/* ============ HOW IT WORKS ============ */
-
 .how-it-works {
 	background-color: #0D1326;
+	min-height: 100vh;
 	padding: 100px 80px;
 	display: flex;
 	flex-direction: column;
@@ -966,6 +990,7 @@ section {
 
 @media (max-width: 1024px) {
 	.how-it-works {
+		min-height: 90vh;
 		padding: 90px 40px;
 	}
 
@@ -976,6 +1001,7 @@ section {
 
 @media (max-width: 768px) {
 	.how-it-works {
+		min-height: auto;
 		padding: 70px 30px;
 	}
 
@@ -1000,11 +1026,9 @@ section {
 	}
 }
 
-/* ============ CONTACT SECTION (form moved to left, widened) ============ */
-
 .contact {
 	width: 100%;
-	min-height: auto;
+	min-height: 100vh;
 	background: #0a0f1d;
 	padding: 110px 80px 100px;
 	display: flex;
@@ -1291,8 +1315,8 @@ section {
 }
 
 @media (max-width: 1100px) {
-
 	.contact {
+		min-height: 95vh;
 		padding: 90px 40px 80px;
 		gap: 50px;
 	}
@@ -1311,12 +1335,11 @@ section {
 	.contact-heading {
 		font-size: 38px;
 	}
-
 }
 
 @media (max-width: 900px) {
-
 	.contact {
+		min-height: auto;
 		flex-direction: column;
 		padding: 70px 20px;
 	}
@@ -1335,11 +1358,9 @@ section {
 	.contact-heading {
 		font-size: 36px;
 	}
-
 }
 
 @media (max-width: 600px) {
-
 	.contact {
 		padding: 60px 15px;
 	}
@@ -1367,5 +1388,186 @@ section {
 		height: 52px;
 		font-size: 15px;
 	}
+}
 
+.reviews {
+	background-color: #0D1326;
+	min-height: 100vh;
+	padding: 110px 80px 120px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+	position: relative;
+	overflow: hidden;
+}
+
+.reviews::before {
+	content: "";
+	position: absolute;
+	top: -160px;
+	left: -160px;
+	width: 420px;
+	height: 420px;
+	background: radial-gradient(circle, rgba(242, 169, 59, 0.1) 0%, rgba(242, 169, 59, 0) 70%);
+	pointer-events: none;
+}
+
+.reviews-heading-wrap {
+	max-width: 660px;
+	position: relative;
+	z-index: 1;
+	margin-bottom: 56px;
+}
+
+.reviews-heading {
+	font-family: 'Poppins', sans-serif;
+	font-size: 40px;
+	font-weight: 700;
+	line-height: 1.25;
+	color: #fff;
+	margin: 0 0 20px;
+}
+
+.reviews-heading span {
+	color: #F2A93B;
+}
+
+.reviews-desc {
+	font-family: 'Poppins', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.8;
+	color: #9aa0b1;
+}
+
+.reviews-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 26px;
+	max-width: 1300px;
+	width: 100%;
+	position: relative;
+	z-index: 1;
+}
+
+.review-card {
+	background-color: #101729;
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	border-radius: 20px;
+	text-align: left;
+	padding: 30px 26px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+	transition: all 0.35s ease;
+}
+
+.review-card:hover {
+	border-color: rgba(242, 169, 59, 0.45);
+	transform: translateY(-8px);
+	box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4), 0 0 35px rgba(242, 169, 59, 0.15);
+}
+
+.review-stars {
+	display: flex;
+	gap: 4px;
+	color: #F2A93B;
+	font-size: 14px;
+}
+
+.review-text {
+	font-family: 'Poppins', sans-serif;
+	font-size: 14.5px;
+	font-weight: 400;
+	line-height: 1.8;
+	color: #c3c8d6;
+}
+
+.review-user {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin-top: auto;
+}
+
+.review-avatar {
+	width: 46px;
+	height: 46px;
+	min-width: 46px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, rgba(242, 169, 59, 0.3), rgba(242, 169, 59, 0.08));
+	color: #F2A93B;
+	font-family: 'Poppins', sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.review-user h4 {
+	font-family: 'Poppins', sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+	color: #fff;
+	margin-bottom: 2px;
+}
+
+.review-user p {
+	font-family: 'Poppins', sans-serif;
+	font-size: 12.5px;
+	font-weight: 400;
+	color: #9aa0b1;
+}
+
+@media (max-width: 1200px) {
+	.reviews-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 1024px) {
+	.reviews {
+		min-height: 90vh;
+		padding: 90px 40px;
+	}
+
+	.reviews-heading {
+		font-size: 32px;
+	}
+}
+
+@media (max-width: 768px) {
+	.reviews {
+		min-height: auto;
+		padding: 70px 30px;
+	}
+
+	.reviews-heading {
+		font-size: 28px;
+	}
+
+	.reviews-heading-wrap {
+		margin-bottom: 40px;
+	}
+}
+
+@media (max-width: 560px) {
+	.reviews-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 480px) {
+	.reviews {
+		padding: 60px 20px;
+	}
+
+	.reviews-heading {
+		font-size: 24px;
+	}
 }

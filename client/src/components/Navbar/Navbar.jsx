@@ -90,10 +90,10 @@ function Navbar() {
 			</ul>
 
 			<div className="btn">
-				<Link to="/" className="login-btn">
+				<Link to="/login" className="login-btn">
 					Login
 				</Link>
-				<Link to="/" className="sign-btn">
+				<Link to="/register" className="sign-btn">
 					Sign Up
 				</Link>
 			</div>

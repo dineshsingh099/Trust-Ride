@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import HeroImg from "../../assets/images/hero.png";
@@ -105,6 +106,14 @@ const safetyFeatures = [
 ];
 
 export default function Landing() {
+	const navigate = useNavigate();
+
+	const scrollToHowItWorks = () => {
+		document
+			.getElementById("how-it-works")
+			?.scrollIntoView({ behavior: "smooth" });
+	};
+	
 	return (
 		<>
 			<div className="hero" id="hero">
@@ -122,8 +131,16 @@ export default function Landing() {
 						and real time tracking.
 					</p>
 					<div className="hero-btns">
-						<button className="cta-primary">Book a Ride</button>
-						<button className="cta-secondary">How it Works</button>
+						<button
+							className="cta-primary"
+							onClick={() => navigate("/user/dashboard")}
+						>
+							Book a Ride
+						</button>
+
+						<button className="cta-secondary" onClick={scrollToHowItWorks}>
+							How it Works
+						</button>
 					</div>
 
 					<div className="hero-badges">
@@ -206,8 +223,8 @@ export default function Landing() {
 					<p className="safety-desc">
 						Safety is not an afterthought at Trust Ride, it is built into every
 						step of the journey. From the moment a driver is verified to the
-						moment you reach your destination, we keep watch so you do not
-						have to.
+						moment you reach your destination, we keep watch so you do not have
+						to.
 					</p>
 				</div>
 
