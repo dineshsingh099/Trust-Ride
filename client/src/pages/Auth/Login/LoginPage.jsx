@@ -37,22 +37,22 @@ export default function LoginPage() {
 
 							<div className="left-info">
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-fingerprint info-icon"></i>
 									<p>Secure Authentication</p>
 								</div>
 
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-right-to-bracket info-icon"></i>
 									<p>Fast & Easy Access</p>
 								</div>
 
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-user-shield info-icon"></i>
 									<p>Trusted Ride Platform</p>
 								</div>
 
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-headset info-icon"></i>
 									<p>24×7 Customer Support</p>
 								</div>
 							</div>
@@ -74,22 +74,22 @@ export default function LoginPage() {
 
 							<div className="left-info">
 								<div className="info-item">
-									<span>🚖</span>
+									<i className="fas fa-car-side info-icon"></i>
 									<p>Book Rides Instantly</p>
 								</div>
 
 								<div className="info-item">
-									<span>📍</span>
+									<i className="fas fa-route info-icon"></i>
 									<p>Live Ride Tracking</p>
 								</div>
 
 								<div className="info-item">
-									<span>💳</span>
+									<i className="fas fa-wallet info-icon"></i>
 									<p>Secure Online Payments</p>
 								</div>
 
 								<div className="info-item">
-									<span>⭐</span>
+									<i className="fas fa-user-gear info-icon"></i>
 									<p>Manage Your Profile</p>
 								</div>
 							</div>
@@ -111,22 +111,22 @@ export default function LoginPage() {
 
 							<div className="left-info">
 								<div className="info-item">
-									<span>🚗</span>
+									<i className="fas fa-handshake info-icon"></i>
 									<p>Accept Ride Requests</p>
 								</div>
 
 								<div className="info-item">
-									<span>💰</span>
+									<i className="fas fa-wallet info-icon"></i>
 									<p>Track Your Earnings</p>
 								</div>
 
 								<div className="info-item">
-									<span>📊</span>
+									<i className="fas fa-chart-line info-icon"></i>
 									<p>Manage Completed Trips</p>
 								</div>
 
 								<div className="info-item">
-									<span>🛡️</span>
+									<i className="fas fa-id-card info-icon"></i>
 									<p>Verified Driver Dashboard</p>
 								</div>
 							</div>
@@ -184,20 +184,6 @@ export default function LoginPage() {
 						</>
 					) : (
 						<>
-							<div className="form-header">
-								<button
-									className="back-btn"
-									onClick={() => setSelectedRole("")}
-								>
-									<i className="fa-solid fa-arrow-left"></i>
-									Back
-								</button>
-
-								<span className="role-tag">
-									{selectedRole === "user" ? "User Login" : "Driver Login"}
-								</span>
-							</div>
-
 							<h2>{selectedRole === "user" ? "User Login" : "Driver Login"}</h2>
 
 							<p className="subtitle">

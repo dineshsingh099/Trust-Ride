@@ -159,16 +159,17 @@ body {
 	transition: .3s;
 }
 
-.info-item:hover {
-	transform: translateX(8px);
-	background: rgba(255, 255, 255, .12);
+.info-item {
+	display: flex;
+	align-items: center;
+	gap: 14px;
 }
 
-.info-item span {
-	font-size: 22px;
-	width: 32px;
+.info-icon {
+	width: 24px;
+	font-size: 20px;
+	color: #F2A93B;
 	text-align: center;
-	flex-shrink: 0;
 }
 
 .info-item p {
@@ -177,6 +178,13 @@ body {
 	font-weight: 500;
 	color: rgba(255, 255, 255, .92);
 }
+
+
+.info-item:hover {
+	transform: translateX(8px);
+	background: rgba(255, 255, 255, .12);
+}
+
 
 .right-panel {
 	flex: 1;
@@ -457,6 +465,11 @@ body {
 
 .submit-btn:active {
 	transform: translateY(-1px);
+}
+
+.switch-text {
+	color: white;
+	font-size: 16px;
 }
 
 @media (max-width: 1100px) {

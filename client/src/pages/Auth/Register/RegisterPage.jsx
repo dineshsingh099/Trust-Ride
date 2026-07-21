@@ -28,22 +28,22 @@ export default function RegisterPage() {
 
 							<div className="left-info">
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-user-plus info-icon"></i>
 									<p>Quick Registration</p>
 								</div>
 
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-circle-check info-icon"></i>
 									<p>Verified Accounts</p>
 								</div>
 
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-shield-halved info-icon"></i>
 									<p>Safe & Secure Platform</p>
 								</div>
 
 								<div className="info-item">
-									<span>✓</span>
+									<i className="fas fa-headset info-icon"></i>
 									<p>24×7 Customer Support</p>
 								</div>
 							</div>
@@ -66,22 +66,22 @@ export default function RegisterPage() {
 
 							<div className="left-info">
 								<div className="info-item">
-									<span>🚖</span>
+									<i className="fas fa-taxi info-icon"></i>
 									<p>Book Rides Anytime</p>
 								</div>
 
 								<div className="info-item">
-									<span>📍</span>
+									<i className="fas fa-location-dot info-icon"></i>
 									<p>Track Every Ride</p>
 								</div>
 
 								<div className="info-item">
-									<span>💳</span>
+									<i className="fas fa-credit-card info-icon"></i>
 									<p>Secure Payments</p>
 								</div>
 
 								<div className="info-item">
-									<span>⭐</span>
+									<i className="fas fa-heart info-icon"></i>
 									<p>Save Favourite Places</p>
 								</div>
 							</div>
@@ -103,22 +103,22 @@ export default function RegisterPage() {
 
 							<div className="left-info">
 								<div className="info-item">
-									<span>🚗</span>
+									<i className="fas fa-car-side info-icon"></i>
 									<p>Receive Ride Requests</p>
 								</div>
 
 								<div className="info-item">
-									<span>💰</span>
+									<i className="fas fa-indian-rupee-sign info-icon"></i>
 									<p>Earn More Every Day</p>
 								</div>
 
 								<div className="info-item">
-									<span>📊</span>
+									<i className="fas fa-route info-icon"></i>
 									<p>Manage Trips Easily</p>
 								</div>
 
 								<div className="info-item">
-									<span>🛡️</span>
+									<i className="fas fa-id-card info-icon"></i>
 									<p>Verified Driver Profile</p>
 								</div>
 							</div>
@@ -178,20 +178,6 @@ export default function RegisterPage() {
 						</>
 					) : (
 						<>
-							<div className="form-header">
-								<button
-									className="back-btn"
-									onClick={() => setSelectedRole("")}
-								>
-									<i className="fa-solid fa-arrow-left"></i>
-									Back
-								</button>
-
-								<span className="role-tag">
-									{selectedRole === "user" ? "User Signup" : "Driver Signup"}
-								</span>
-							</div>
-
 							<h2>
 								{selectedRole === "user"
 									? "Create User Account"
@@ -220,29 +206,10 @@ export default function RegisterPage() {
 									</div>
 								</div>
 
-								{selectedRole === "driver" && (
-									<div className="form-row-split">
-										<div className="input-group">
-											<label>Vehicle Number</label>
-											<input type="text" placeholder="RJ14 AB 1234" />
-										</div>
-
-										<div className="input-group">
-											<label>License Number</label>
-											<input type="text" placeholder="DL-XXXXXXXXXXXX" />
-										</div>
-									</div>
-								)}
-
 								<div className="form-row-split">
 									<div className="input-group">
 										<label>Password</label>
 										<input type="password" placeholder="Create password" />
-									</div>
-
-									<div className="input-group">
-										<label>Confirm Password</label>
-										<input type="password" placeholder="Confirm password" />
 									</div>
 								</div>
 
