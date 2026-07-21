@@ -80,10 +80,10 @@ function Navbar() {
 				))}
 
 				<li className="mobile-btn">
-					<Link to="/" className="login-btn" onClick={closeMenu}>
+					<Link to="/login" className="login-btn" onClick={closeMenu}>
 						Login
 					</Link>
-					<Link to="/" className="sign-btn" onClick={closeMenu}>
+					<Link to="/register" className="sign-btn" onClick={closeMenu}>
 						Sign Up
 					</Link>
 				</li>
