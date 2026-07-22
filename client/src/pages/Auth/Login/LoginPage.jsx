@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-	FaLock,
-	FaUserShield,
-	FaMapMarkedAlt,
-	FaShieldAlt,
-	FaUser,
-	FaCar,
-	FaArrowRight,
-} from "react-icons/fa";
 import Logo from "../../../assets/images/logo.png";
+import Left from "../../../assets/images/left.png";
 import "./LoginPage.css";
 
 export default function LoginPage() {
@@ -18,120 +10,59 @@ export default function LoginPage() {
 	return (
 		<div className="auth-container">
 			<div className="auth-card">
-				<div className="left-panel">
-					<div className="brand-badge">WELCOME TO TRUST RIDE</div>
+				<div className="left-panel" style={{ backgroundImage: `url(${Left})` }}>
+					<div className="left-overlay"></div>
 
-					{!selectedRole && (
-						<>
-							<h1>
-								Welcome Back
-								<br />
-								<span>Sign in to continue.</span>
-							</h1>
+					<div className="left-content">
+						<div className="brand-badge">WELCOME TO TRUST RIDE</div>
 
-							<p className="left-description">
-								Choose your account type to continue with Trust Ride. Whether
-								you're booking a ride or driving with us, your journey starts
-								with a secure login.
-							</p>
+						{!selectedRole && (
+							<>
+								<h1>
+									Welcome Back
+									<br />
+									<span>Sign in to continue.</span>
+								</h1>
 
-							<div className="left-info">
-								<div className="info-item">
-									<i className="fas fa-fingerprint info-icon"></i>
-									<p>Secure Authentication</p>
-								</div>
+								<p className="left-description">
+									Choose your account type to continue with Trust Ride. Whether
+									you're booking a ride or driving with us, your journey starts
+									with a secure login.
+								</p>
+							</>
+						)}
 
-								<div className="info-item">
-									<i className="fas fa-right-to-bracket info-icon"></i>
-									<p>Fast & Easy Access</p>
-								</div>
+						{selectedRole === "user" && (
+							<>
+								<h1>
+									User
+									<br />
+									<span>Login</span>
+								</h1>
 
-								<div className="info-item">
-									<i className="fas fa-user-shield info-icon"></i>
-									<p>Trusted Ride Platform</p>
-								</div>
+								<p className="left-description">
+									Sign in to book rides, manage your bookings, save favourite
+									places, make secure payments and track every ride in real
+									time.
+								</p>
+							</>
+						)}
 
-								<div className="info-item">
-									<i className="fas fa-headset info-icon"></i>
-									<p>24×7 Customer Support</p>
-								</div>
-							</div>
-						</>
-					)}
+						{selectedRole === "driver" && (
+							<>
+								<h1>
+									Driver
+									<br />
+									<span>Login</span>
+								</h1>
 
-					{selectedRole === "user" && (
-						<>
-							<h1>
-								User
-								<br />
-								<span>Login</span>
-							</h1>
-
-							<p className="left-description">
-								Sign in to book rides, manage your bookings, save favourite
-								places, make secure payments and track every ride in real time.
-							</p>
-
-							<div className="left-info">
-								<div className="info-item">
-									<i className="fas fa-car-side info-icon"></i>
-									<p>Book Rides Instantly</p>
-								</div>
-
-								<div className="info-item">
-									<i className="fas fa-route info-icon"></i>
-									<p>Live Ride Tracking</p>
-								</div>
-
-								<div className="info-item">
-									<i className="fas fa-wallet info-icon"></i>
-									<p>Secure Online Payments</p>
-								</div>
-
-								<div className="info-item">
-									<i className="fas fa-user-gear info-icon"></i>
-									<p>Manage Your Profile</p>
-								</div>
-							</div>
-						</>
-					)}
-
-					{selectedRole === "driver" && (
-						<>
-							<h1>
-								Driver
-								<br />
-								<span>Login</span>
-							</h1>
-
-							<p className="left-description">
-								Access your driver dashboard to accept ride requests, manage
-								earnings, view trip history and grow with Trust Ride.
-							</p>
-
-							<div className="left-info">
-								<div className="info-item">
-									<i className="fas fa-handshake info-icon"></i>
-									<p>Accept Ride Requests</p>
-								</div>
-
-								<div className="info-item">
-									<i className="fas fa-wallet info-icon"></i>
-									<p>Track Your Earnings</p>
-								</div>
-
-								<div className="info-item">
-									<i className="fas fa-chart-line info-icon"></i>
-									<p>Manage Completed Trips</p>
-								</div>
-
-								<div className="info-item">
-									<i className="fas fa-id-card info-icon"></i>
-									<p>Verified Driver Dashboard</p>
-								</div>
-							</div>
-						</>
-					)}
+								<p className="left-description">
+									Access your driver dashboard to accept ride requests, manage
+									earnings, view trip history and grow with Trust Ride.
+								</p>
+							</>
+						)}
+					</div>
 				</div>
 
 				<div className="right-panel">
@@ -148,10 +79,6 @@ export default function LoginPage() {
 									className="role-btn"
 									onClick={() => setSelectedRole("user")}
 								>
-									<div className="role-icon">
-										<i className="fa-solid fa-user"></i>
-									</div>
-
 									<div className="role-content">
 										<h4>Continue as User</h4>
 										<p>Book rides, manage trips and payments.</p>
@@ -164,10 +91,6 @@ export default function LoginPage() {
 									className="role-btn"
 									onClick={() => setSelectedRole("driver")}
 								>
-									<div className="role-icon">
-										<i className="fa-solid fa-car-side"></i>
-									</div>
-
 									<div className="role-content">
 										<h4>Continue as Driver</h4>
 										<p>Accept rides and manage your earnings.</p>
@@ -193,12 +116,18 @@ export default function LoginPage() {
 							<form className="auth-form">
 								<div className="input-group">
 									<label>Email Address</label>
-									<input type="email" placeholder="Enter your email" />
+									<div className="input-with-icon">
+										<i className="fa-solid fa-envelope input-icon"></i>
+										<input type="email" placeholder="Enter your email" />
+									</div>
 								</div>
 
 								<div className="input-group">
 									<label>Password</label>
-									<input type="password" placeholder="Enter your password" />
+									<div className="input-with-icon">
+										<i className="fa-solid fa-lock input-icon"></i>
+										<input type="password" placeholder="Enter your password" />
+									</div>
 								</div>
 
 								<div className="form-meta-row">
@@ -216,6 +145,17 @@ export default function LoginPage() {
 								Don't have an account?
 								<Link to="/register"> Register Now</Link>
 							</p>
+
+							<div className="form-footer">
+								<button
+									type="button"
+									className="back-btn"
+									onClick={() => setSelectedRole("")}
+								>
+									<i className="fa-solid fa-arrow-left"></i>
+									Back
+								</button>
+							</div>
 						</>
 					)}
 				</div>

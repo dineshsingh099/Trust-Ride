@@ -326,6 +326,7 @@ export default function Landing() {
 
 					<div className="contact-availability">
 						<span className="availability-dot"></span>
+
 						<div>
 							<h4>Currently Online</h4>
 							<p>Our support team is active and ready to help right now.</p>
@@ -335,38 +336,61 @@ export default function Landing() {
 
 				<form className="contact-form">
 					<div className="contact-form-header">
+						<span className="form-tag">CONTACT FORM</span>
+
 						<h3>Send us a message</h3>
-						<p>Fill in the details below, our team replies within 2 hours.</p>
+
+						<p>Fill in the details below. Our team replies within 2 hours.</p>
 					</div>
 
 					<div className="form-row">
 						<div className="form-group">
 							<label>Full Name</label>
-							<input type="text" placeholder="Enter your name" />
+
+							<div className="input-box">
+								<i className="fa-solid fa-user input-icon"></i>
+
+								<input type="text" placeholder="Enter your full name" />
+							</div>
 						</div>
 
 						<div className="form-group">
 							<label>Email Address</label>
-							<input type="email" placeholder="you@example.com" />
+
+							<div className="input-box">
+								<i className="fa-solid fa-envelope input-icon"></i>
+
+								<input type="email" placeholder="you@example.com" />
+							</div>
 						</div>
 					</div>
 
 					<div className="form-group">
 						<label>Subject</label>
-						<input type="text" placeholder="How can we help?" />
+
+						<div className="input-box">
+							<i className="fa-solid fa-tag input-icon"></i>
+
+							<input type="text" placeholder="How can we help?" />
+						</div>
 					</div>
 
 					<div className="form-group">
 						<label>Message</label>
-						<textarea
-							rows="5"
-							placeholder="Write your message here..."
-						></textarea>
+
+						<div className="input-box textarea-box">
+							<i className="fa-solid fa-comment-dots input-icon textarea-icon"></i>
+
+							<textarea
+								rows="6"
+								placeholder="Write your message here..."
+							></textarea>
+						</div>
 					</div>
 
 					<button type="submit" className="cta-primary contact-submit">
-						Send Message
-						<FaPaperPlane />
+						<span>Send Message</span>
+
 					</button>
 				</form>
 			</section>
