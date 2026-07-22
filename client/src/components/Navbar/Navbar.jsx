@@ -59,7 +59,7 @@ function Navbar() {
 		>
 			<Link to="/" className="logo-wrapper" onClick={closeMenu}>
 				<img src={Logo} alt="Logo" className="logo-img" />
-				<h1 className="logo">Trust Ride</h1>
+				<h1 className="logo-text">Trust Ride</h1>
 			</Link>
 
 			<div className="menu-icon" onClick={toggleMenu}>

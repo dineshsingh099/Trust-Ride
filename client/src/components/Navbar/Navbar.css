@@ -30,19 +30,14 @@ body {
     gap: 14px;
 }
 
-.logo {
-    color: #fff;
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-}
-
 .logo-img {
     width: 64px;
     height: 64px;
     object-fit: contain;
+}
+
+.logo-text {
+    font-size: 14px;
 }
 
 .nav-links {
